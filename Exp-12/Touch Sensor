@@ -1,0 +1,48 @@
+Problem
+
+You want to make a buzzing sound with the Raspberry Pi using touch
+sensor.
+
+Solution
+
+These example programs show you how to use the capacitive touch
+sensors with Python and the Raspberry Pi's GPIO. It is relatively
+straightforward to adapt the programs to do different things. Just change
+the lines with print "pressed".
+Two versions of the code are provided. One will continuously print
+output to the terminal while the touch sensor is pressed. The other will
+only print output once, irrelevant of how long the pad is pressed. Both
+pieces of code will work with the momentary and toggle boards.
+Continuous Output:
+This version of the code will continuously print output while the
+pad is pressed.
+import time
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+padPin = 23
+GPIO.setup(padPin, GPIO.IN)
+while True:
+padPressed = GPIO.input(padPin)
+if padPressed:
+print "pressed"
+time.sleep(0.1)
+Single Output:
+This version of the Python code will only print an output once each
+time the sensor detects a touch.
+import time
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
+padPin = 23
+GPIO.setup(padPin, GPIO.IN)
+alreadyPressed = False
+while True:
+padPressed = GPIO.input(padPin)
+if padPressed and not alreadyPressed:
+print "pressed"
+alreadyPressed = padPressed
+time.sleep(0.1)
+Running the Code:
+Open a terminal. Move to the directory that you saved the code and
+type in the following command (change the file name to whatever you
+called your Python file):
+$ sudo python touchsensor.py
